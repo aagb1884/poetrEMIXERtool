@@ -105,20 +105,27 @@ button {
 
 @media (max-width: 950px) {
   button {
-    font-size: 12px;
+    font-size: 13px;
+  }
+  #randomise-btn {
+    font-size: 8px;
   }
 }
 
-@media (max-width: 400px) {
+@media (max-width: 600px) {
   .title {
     font-size: 30px;
   }
   .main-container {
     flex-direction: column;
+    padding-top: 0;
   }
 
   .column1, .column2, .column3, .column4 {
     width: 100%;
+  }
+  #randomise-btn {
+    font-size: 13px;
   }
 
   #poem-input, .remixed-poem {
