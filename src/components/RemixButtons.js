@@ -1,4 +1,5 @@
-function RemixButtons({handleCopyClick, clearRemix, shuffleArray, sortAtoZ, sortZtoA}) {
+function RemixButtons({handleCopyClick, clearRemix, shuffleArray, sortAtoZ, 
+  sortZtoA}) {
  
   return (
     <div className="remix-buttons">     
@@ -7,6 +8,7 @@ function RemixButtons({handleCopyClick, clearRemix, shuffleArray, sortAtoZ, sort
           onClick={() => {shuffleArray()}}>
           Randomise
       </button>
+      <div className="sort-btns">
         <button
           id="sort-btn"
           onClick={() => {sortAtoZ()}}>
@@ -16,8 +18,8 @@ function RemixButtons({handleCopyClick, clearRemix, shuffleArray, sortAtoZ, sort
           id="sort-btn"
           onClick={() => {sortZtoA()}}>
           Sort Z-A
-      </button>
-      <br />
+      </button>   
+      </div>
       <button
           id="copy-btn"
           onClick={() => {handleCopyClick()}}>
