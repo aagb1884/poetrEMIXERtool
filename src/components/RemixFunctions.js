@@ -5,10 +5,10 @@ function RemixFunctions({wordArray, letterArray, remixedText, setRemixedText}) {
 
   useEffect(() => {
     if (wordArray.length > 0 && letterArray.length === 0) {
-      const mappedWords = wordArray.map(word => `${word}, `);
+      const mappedWords = wordArray.map(word => `${word} `);
       setRemixedText(mappedWords.join(''));
     } else if (letterArray.length > 0 && wordArray.length === 0) {
-      const mappedLetters = letterArray.map(letter => `${letter}, `);
+      const mappedLetters = letterArray.map(letter => `${letter} `);
       setRemixedText(mappedLetters.join(''));
     }
   }, [wordArray, letterArray]);
@@ -17,8 +17,7 @@ function RemixFunctions({wordArray, letterArray, remixedText, setRemixedText}) {
   ? <span className="placeholder-style">Split words or letters will appear here.</span> 
   : remixedText;
 
-    console.log(placeholderText)
-
+  
   return (
     <div className="remix-functions">
    
