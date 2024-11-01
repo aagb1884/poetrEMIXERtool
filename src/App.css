@@ -99,6 +99,7 @@ button {
 
 #clear-all-btn, #clear-remix-btn {
   background-color: red;
+  color: black;
 }
 
 /* responsive  */
