@@ -9,6 +9,55 @@ const [wordArray, setWordArray] = useState([]);
 const [letterArray, setLetterArray] = useState([]);
 const [remixedText, setRemixedText] = useState('');
 
+const posTagger = require('wink-pos-tagger');
+const tagger = posTagger();
+
+const taggedText = tagger.tagSentence(poem)
+const mappedTaggedText = taggedText.map((word) => word)
+// console.log(mappedTaggedText)
+
+const getVerbs = mappedTaggedText.filter((word) => word.pos === 'VB' ||
+                  word.pos === 'VBN' || word.pos === 'VBG' ||
+                  word.pos === 'VBZ' || word.pos === 'VBD').
+                  map(word => word.value)
+
+const shuffleVerbs = getVerbs.sort(() => 0.5 - Math.random()); 
+
+const verbIndexArr =[];
+function getVerbIndexes() {
+  mappedTaggedText.forEach((word, index) => {
+      if (word.pos === 'VB' ||
+      word.pos === 'VBN' || word.pos === 'VBG' ||
+      word.pos === 'VBZ' || word.pos === 'VBD') {
+          verbIndexArr.push(index);
+      }
+  });
+return verbIndexArr;
+}
+// console.log(getVerbIndexes())
+
+const removeVerbs = () => {
+  getVerbIndexes()
+for (var i = verbIndexArr.length -1; i >= 0; i--)
+mappedTaggedText.slice(verbIndexArr[i],1);
+  return mappedTaggedText
+}
+
+// console.log('remove verbs', removeVerbs())
+
+const replaceWithShuffledVerbs = () => {
+  removeVerbs()
+  for (var i = verbIndexArr.length -1; i >= 0; i--)
+  mappedTaggedText.splice(shuffleVerbs[i],0);
+return mappedTaggedText
+}
+
+console.log('replace verbs', replaceWithShuffledVerbs())
+
+
+
+
+
 const handlePoemChange = (e) => {
     setPoem(e.target.value);
   };
