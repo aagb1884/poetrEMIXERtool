@@ -108,6 +108,38 @@ button {
   color: black;
 }
 
+.verbs, .nouns, .adj {
+  margin: 1px;
+  padding: 3px;
+}
+
+.verbs > button {
+  background-color: rgb(0, 255, 255, 0.3);
+}
+
+.nouns > button {
+  background-color: rgb(250, 234, 209);
+}
+
+.adj > button {
+  background-color: rgb(253, 204, 233);
+}
+
+.split-btns > button {
+  background-color: rgb(208, 168, 246);  
+}
+
+.reverse-btns > button {
+  background-color:rgb(180, 250, 180);
+} 
+
+.randomise-btns > button, #randomise-btn {
+  background-color:rgb(243, 237, 184);
+}
+.sort-btns > button {
+    background-color: rgb(231, 148, 148);
+}
+
 /* responsive  */
 
 @media (max-width: 950px) {
@@ -142,8 +174,14 @@ button {
     margin-right: 0;
   }
 
-  .split-btns, .reverse-btns, .randomise-btns, .misc-btns, .sort-btns {
+  .split-btns, .reverse-btns, .randomise-btns, 
+  .misc-btns, .sort-btns, .verbs, .nouns, .adj {
     display: flex;
     flex-direction: row;
   }
+
+  .word-types {
+    margin: 5px;
+  }
+
 }

@@ -1,6 +1,7 @@
 function ButtonsColumn({ poem, clearAll, letterArray, setLetterArray, wordArray, 
-    setWordArray, reverseWords, reverseLines, punctuationWord, reverseSentences,
-    poeticRedundancy, makePalindrome, randomiseLines, randomiseSentences }) {
+    setWordArray, reverseAllWords, reverseLines, punctuationWord, reverseSentences,
+    poeticRedundancy, makePalindrome, randomiseLines, randomiseSentences, randomiseWords, 
+    reverseWords, removeWords, verbValues, nounValues, adjValues}) {
     
     const punctuationLetter = /[-\.,?!—();:' ’]/g;
 
@@ -79,7 +80,7 @@ function ButtonsColumn({ poem, clearAll, letterArray, setLetterArray, wordArray,
                 <div className="reverse-btns">
                  <button
                 id="reverse-word-order"
-                onClick={() => {reverseWords()}}>
+                onClick={() => {reverseAllWords()}}>
                 Reverse Word Order
                 </button>
                 <button
@@ -120,6 +121,62 @@ function ButtonsColumn({ poem, clearAll, letterArray, setLetterArray, wordArray,
                 </button>
                 </div>
 
+                <div className="word-types">
+                <div className="verbs">
+                <button 
+                id="randomise-verbs-btn"
+                onClick={() => {randomiseWords(verbValues)}}>
+                Randomise Verbs
+                </button>  
+                <button 
+                id="reverse-verbs-btn"
+                onClick={() => {reverseWords(verbValues)}}>
+                Reverse Verbs
+                </button>  
+                <button 
+                id="remove-verbs-btn"
+                onClick={() => {removeWords(verbValues)}}>
+                Remove Verbs
+                </button>  
+                </div>
+
+                <div className="nouns">
+                <button 
+                id="randomise-nouns-btn"
+                onClick={() => {randomiseWords(nounValues)}}>
+                Randomise Nouns
+                </button>  
+                <button 
+                id="reverse-nouns-btn"
+                onClick={() => {reverseWords(nounValues)}}>
+                Reverse Nouns
+                </button>  
+                <button 
+                id="remove-nouns-btn"
+                onClick={() => {removeWords(nounValues)}}>
+                Remove Nouns
+                </button>  
+                </div>
+
+                <div className="adj">
+                <button 
+                id="randomise-adj-btn"
+                onClick={() => {randomiseWords(adjValues)}}>
+                Randomise Adjectives
+                </button>  
+                <button 
+                id="reverse-adj-btn"
+                onClick={() => {reverseWords(adjValues)}}>
+                Reverse Adjectives
+                </button>  
+                <button 
+                id="remove-adj-btn"
+                onClick={() => {removeWords(adjValues)}}>
+                Remove Adjectives
+                </button>  
+                </div>
+                </div>
+                
                 <button
                     id="clear-all-btn"
                     onClick={() => {clearAll()}}>

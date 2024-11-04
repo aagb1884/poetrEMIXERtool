@@ -14,49 +14,69 @@ const tagger = posTagger();
 
 const taggedText = tagger.tagSentence(poem)
 const mappedTaggedText = taggedText.map((word) => word)
-// console.log(mappedTaggedText)
 
-const getVerbs = mappedTaggedText.filter((word) => word.pos === 'VB' ||
-                  word.pos === 'VBN' || word.pos === 'VBG' ||
-                  word.pos === 'VBZ' || word.pos === 'VBD').
-                  map(word => word.value)
+console.log(mappedTaggedText)
 
-const shuffleVerbs = getVerbs.sort(() => 0.5 - Math.random()); 
+const verbValues = ['VB', 'VBN', 'VBG', 'VBZ', 'VBD'];
+const nounValues = ['NN', 'NNP', 'NNS', 'MD'];
+const adjValues = ['JJ'];
 
-const verbIndexArr =[];
-function getVerbIndexes() {
-  mappedTaggedText.forEach((word, index) => {
-      if (word.pos === 'VB' ||
-      word.pos === 'VBN' || word.pos === 'VBG' ||
-      word.pos === 'VBZ' || word.pos === 'VBD') {
-          verbIndexArr.push(index);
-      }
-  });
-return verbIndexArr;
-}
-// console.log(getVerbIndexes())
-
-const removeVerbs = () => {
-  getVerbIndexes()
-for (var i = verbIndexArr.length -1; i >= 0; i--)
-mappedTaggedText.slice(verbIndexArr[i],1);
+function getWords(wordTypeArray) {
   return mappedTaggedText
+    .filter((word) => wordTypeArray.includes(word.pos)) 
+    .map((word) => word.value);  
+}
+const wordIndexArr =[];
+
+function getWordIndexes(wordTypeArray) {
+ 
+  mappedTaggedText.forEach((word, index) => {
+      if (wordTypeArray.includes(word.pos)) {
+        wordIndexArr.push(index);
+      }
+    });
+return wordIndexArr;
 }
 
-// console.log('remove verbs', removeVerbs())
+const shuffleWords = (wordArray) => {
+  const shuffled = [...getWords(wordArray)].sort(() => 0.5 - Math.random()); 
+  return shuffled; 
+};
 
-const replaceWithShuffledVerbs = () => {
-  removeVerbs()
-  for (var i = verbIndexArr.length -1; i >= 0; i--)
-  mappedTaggedText.splice(shuffleVerbs[i],0);
-return mappedTaggedText
+const randomiseWords = (wordArray) => {
+  getWordIndexes(wordArray);
+  const shuffledWords = shuffleWords(wordArray);
+  wordIndexArr.forEach((index, i) => {
+    mappedTaggedText.splice(index, 1, shuffledWords[i]); 
+  });
+const joinedText = mappedTaggedText
+      .map(item => typeof item === 'string' ? item : item.value)
+      .join(' '); 
+    setRemixedText(joinedText)
+};
+
+const reverseWords = (wordArray) => {
+  getWordIndexes(wordArray)
+  const reversedWords = getWords(wordArray).reverse()
+  wordIndexArr.forEach((index, i) => {
+    mappedTaggedText.splice(index, 1, reversedWords[i]); 
+  });
+
+const joinedText = mappedTaggedText
+      .map(item => typeof item === 'string' ? item : item.value)
+      .join(' '); 
+    setRemixedText(joinedText)
 }
 
-console.log('replace verbs', replaceWithShuffledVerbs())
-
-
-
-
+const removeWords = (wordArray) => {
+  getWordIndexes(wordArray)
+for (var i = wordIndexArr.length -1; i >= 0; i--)
+mappedTaggedText.splice(wordIndexArr[i],1);
+const joinedText = mappedTaggedText
+.map(item => item.value)
+.join(' '); 
+setRemixedText(joinedText)
+}
 
 const handlePoemChange = (e) => {
     setPoem(e.target.value);
@@ -100,7 +120,7 @@ const sortZtoA = () => {
 
 const punctuationWord = /[-\.,?!—();:]/g;
 
-const reverseWords = () => {
+const reverseAllWords = () => {
   setRemixedText(poem.toLowerCase().
   replace(punctuationWord, "").
   split(" ").
@@ -171,13 +191,19 @@ const clearAll = () => {
         setLetterArray={setLetterArray}
         clearAll={clearAll} 
         reverseLines={reverseLines}
-        reverseWords={reverseWords}
+        reverseAllWords={reverseAllWords}
         punctuationWord={punctuationWord}
         reverseSentences={reverseSentences} 
         poeticRedundancy={poeticRedundancy}
         makePalindrome={makePalindrome}
         randomiseLines={randomiseLines}
         randomiseSentences={randomiseSentences}
+        randomiseWords={randomiseWords}
+        reverseWords={reverseWords}
+        removeWords={removeWords}
+        verbValues={verbValues}
+        nounValues={nounValues}
+        adjValues={adjValues}
         />
         </div>
         <div className="column3">
