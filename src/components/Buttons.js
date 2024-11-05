@@ -1,7 +1,7 @@
 function ButtonsColumn({ poem, clearAll, letterArray, setLetterArray, wordArray, 
     setWordArray, reverseAllWords, reverseLines, punctuationWord, reverseSentences,
     poeticRedundancy, makePalindrome, randomiseLines, randomiseSentences, randomiseWords, 
-    reverseWords, removeWords, verbValues, nounValues, adjValues}) {
+    reverseWords, removeWords, verbValues, nounValues, adjValues, mappedTaggedText}) {
     
     const punctuationLetter = /[-\.,?!—();:' ’]/g;
 
@@ -80,17 +80,17 @@ function ButtonsColumn({ poem, clearAll, letterArray, setLetterArray, wordArray,
                 <div className="reverse-btns">
                  <button
                 id="reverse-word-order"
-                onClick={() => {reverseAllWords()}}>
+                onClick={() => {reverseAllWords(poem)}}>
                 Reverse Word Order
                 </button>
                 <button
                 id="reverse-line-order"
-                onClick={() => {reverseLines()}}>
+                onClick={() => {reverseLines(poem)}}>
                 Reverse Line Order
                 </button>
                 <button
                 id="reverse-sentence-order"
-                onClick={() => {reverseSentences()}}>
+                onClick={() => {reverseSentences(poem)}}>
                 Reverse Sentence Order
                 </button>
                 </div>
@@ -98,12 +98,12 @@ function ButtonsColumn({ poem, clearAll, letterArray, setLetterArray, wordArray,
                 <div className="randomise-btns">
                 <button
                 id="random-lines-btn"
-                onClick={() => {randomiseLines()}}>
+                onClick={() => {randomiseLines(poem)}}>
                 Randomise Lines
                 </button> 
                 <button
                 id="random-sentences-btn"
-                onClick={() => {randomiseSentences()}}>
+                onClick={() => {randomiseSentences(poem)}}>
                 Randomise Sentences
                 </button> 
                 </div>
@@ -111,12 +111,12 @@ function ButtonsColumn({ poem, clearAll, letterArray, setLetterArray, wordArray,
                 <div className="misc-btns">
                 <button
                 id="poetic-redundancy-btn"
-                onClick={() => {poeticRedundancy()}}>
+                onClick={() => {poeticRedundancy(poem)}}>
                 Poetic Redundancy
                 </button>
                 <button 
                 id="make-palindrome-btn"
-                onClick={() => {makePalindrome()}}>
+                onClick={() => {makePalindrome(poem)}}>
                 Make Palindrome
                 </button>
                 </div>
@@ -125,17 +125,17 @@ function ButtonsColumn({ poem, clearAll, letterArray, setLetterArray, wordArray,
                 <div className="verbs">
                 <button 
                 id="randomise-verbs-btn"
-                onClick={() => {randomiseWords(verbValues)}}>
+                onClick={() => {randomiseWords(verbValues, mappedTaggedText)}}>
                 Randomise Verbs
                 </button>  
                 <button 
                 id="reverse-verbs-btn"
-                onClick={() => {reverseWords(verbValues)}}>
+                onClick={() => {reverseWords(verbValues, mappedTaggedText)}}>
                 Reverse Verbs
                 </button>  
                 <button 
                 id="remove-verbs-btn"
-                onClick={() => {removeWords(verbValues)}}>
+                onClick={() => {removeWords(verbValues, mappedTaggedText)}}>
                 Remove Verbs
                 </button>  
                 </div>
@@ -143,17 +143,17 @@ function ButtonsColumn({ poem, clearAll, letterArray, setLetterArray, wordArray,
                 <div className="nouns">
                 <button 
                 id="randomise-nouns-btn"
-                onClick={() => {randomiseWords(nounValues)}}>
+                onClick={() => {randomiseWords(nounValues, mappedTaggedText)}}>
                 Randomise Nouns
                 </button>  
                 <button 
                 id="reverse-nouns-btn"
-                onClick={() => {reverseWords(nounValues)}}>
+                onClick={() => {reverseWords(nounValues, mappedTaggedText)}}>
                 Reverse Nouns
                 </button>  
                 <button 
                 id="remove-nouns-btn"
-                onClick={() => {removeWords(nounValues)}}>
+                onClick={() => {removeWords(nounValues, mappedTaggedText)}}>
                 Remove Nouns
                 </button>  
                 </div>
@@ -161,17 +161,17 @@ function ButtonsColumn({ poem, clearAll, letterArray, setLetterArray, wordArray,
                 <div className="adj">
                 <button 
                 id="randomise-adj-btn"
-                onClick={() => {randomiseWords(adjValues)}}>
+                onClick={() => {randomiseWords(adjValues, mappedTaggedText)}}>
                 Randomise Adjectives
                 </button>  
                 <button 
                 id="reverse-adj-btn"
-                onClick={() => {reverseWords(adjValues)}}>
+                onClick={() => {reverseWords(adjValues, mappedTaggedText)}}>
                 Reverse Adjectives
                 </button>  
                 <button 
                 id="remove-adj-btn"
-                onClick={() => {removeWords(adjValues)}}>
+                onClick={() => {removeWords(adjValues, mappedTaggedText)}}>
                 Remove Adjectives
                 </button>  
                 </div>

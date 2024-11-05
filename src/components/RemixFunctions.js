@@ -14,7 +14,7 @@ function RemixFunctions({wordArray, letterArray, remixedText, setRemixedText}) {
   }, [wordArray, letterArray]);
 
   const placeholderText = remixedText.length === 0 
-  ? <span className="placeholder-style">Split words or letters will appear here.</span> 
+  ? <span className="placeholder-style">Remixed text will appear here.</span> 
   : remixedText;
 
   

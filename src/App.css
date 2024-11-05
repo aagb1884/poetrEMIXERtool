@@ -150,6 +150,9 @@ button {
   button {
     font-size: 9px;
   }
+  .remix-buttons-column > div > button {
+    font-size: 9px;
+  }
 }
 
 @media (max-width: 600px) {

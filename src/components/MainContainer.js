@@ -12,25 +12,28 @@ const [remixedText, setRemixedText] = useState('');
 const posTagger = require('wink-pos-tagger');
 const tagger = posTagger();
 
-const taggedText = tagger.tagSentence(poem)
-const mappedTaggedText = taggedText.map((word) => word)
+const taggedText = (str) => {
+  return tagger.tagSentence(str)
+}
 
-console.log(mappedTaggedText)
+const mappedTaggedText = taggedText(poem).map((word) => word)
+const mappedTaggedRemixedText = remixedText.length > 1 ? taggedText(remixedText).map((word) => word) : [];
 
 const verbValues = ['VB', 'VBN', 'VBG', 'VBZ', 'VBD'];
 const nounValues = ['NN', 'NNP', 'NNS', 'MD'];
 const adjValues = ['JJ'];
 
-function getWords(wordTypeArray) {
-  return mappedTaggedText
+function getWords(wordTypeArray, textArray) {
+  return textArray
     .filter((word) => wordTypeArray.includes(word.pos)) 
     .map((word) => word.value);  
 }
+
 const wordIndexArr =[];
 
-function getWordIndexes(wordTypeArray) {
+function getWordIndexes(wordTypeArray, textArray) {
  
-  mappedTaggedText.forEach((word, index) => {
+  textArray.forEach((word, index) => {
       if (wordTypeArray.includes(word.pos)) {
         wordIndexArr.push(index);
       }
@@ -38,41 +41,41 @@ function getWordIndexes(wordTypeArray) {
 return wordIndexArr;
 }
 
-const shuffleWords = (wordArray) => {
-  const shuffled = [...getWords(wordArray)].sort(() => 0.5 - Math.random()); 
+const shuffleWords = (wordTypeArray, textArray) => {
+  const shuffled = [...getWords(wordTypeArray, textArray)].sort(() => 0.5 - Math.random()); 
   return shuffled; 
 };
 
-const randomiseWords = (wordArray) => {
-  getWordIndexes(wordArray);
-  const shuffledWords = shuffleWords(wordArray);
+const randomiseWords = (wordTypeArray, textArray) => {
+  getWordIndexes(wordTypeArray, textArray);
+  const shuffledWords = shuffleWords(wordTypeArray, textArray);
   wordIndexArr.forEach((index, i) => {
-    mappedTaggedText.splice(index, 1, shuffledWords[i]); 
+    textArray.splice(index, 1, shuffledWords[i]); 
   });
-const joinedText = mappedTaggedText
+const joinedText = textArray
       .map(item => typeof item === 'string' ? item : item.value)
       .join(' '); 
     setRemixedText(joinedText)
 };
 
-const reverseWords = (wordArray) => {
-  getWordIndexes(wordArray)
-  const reversedWords = getWords(wordArray).reverse()
+const reverseWords = (wordTypeArray, textArray) => {
+  getWordIndexes(wordTypeArray, textArray)
+  const reversedWords = getWords(wordTypeArray, textArray).reverse()
   wordIndexArr.forEach((index, i) => {
-    mappedTaggedText.splice(index, 1, reversedWords[i]); 
+    textArray.splice(index, 1, reversedWords[i]); 
   });
 
-const joinedText = mappedTaggedText
+const joinedText = textArray
       .map(item => typeof item === 'string' ? item : item.value)
       .join(' '); 
     setRemixedText(joinedText)
 }
 
-const removeWords = (wordArray) => {
-  getWordIndexes(wordArray)
+const removeWords = (wordTypeArray, textArray) => {
+  getWordIndexes(wordTypeArray, textArray)
 for (var i = wordIndexArr.length -1; i >= 0; i--)
-mappedTaggedText.splice(wordIndexArr[i],1);
-const joinedText = mappedTaggedText
+textArray.splice(wordIndexArr[i],1);
+const joinedText = textArray
 .map(item => item.value)
 .join(' '); 
 setRemixedText(joinedText)
@@ -101,9 +104,9 @@ const handlePoemChange = (e) => {
     }
 };
 
-const shuffleArray = () => {
+const shuffleArray = (text) => {
   // Ensure remixedText is converted to a string before splitting
-  const tempArray = Array.isArray(remixedText) ? remixedText : remixedText.split(' ');
+  const tempArray = Array.isArray(text) ? text : text.split(' ');
   tempArray.sort(() => 0.5 - Math.random()); 
   const mappedString = tempArray.join(' ');
   setRemixedText(mappedString);
@@ -120,52 +123,54 @@ const sortZtoA = () => {
 
 const punctuationWord = /[-\.,?!—();:]/g;
 
-const reverseAllWords = () => {
-  setRemixedText(poem.toLowerCase().
+const reverseAllWords = (text) => {
+  setRemixedText(text.toLowerCase().
   replace(punctuationWord, "").
   split(" ").
   reverse()
   .join(" "))
 }
 
-const reverseLines = () => {
-  setRemixedText(poem.split("\n").reverse().join("\n"))
+const reverseLines = (text) => {
+  setRemixedText(text.split("\n").reverse().join("\n"))
 }
 
 const sentenceEndings = /[.?!]/g;
-const reverseSentences = () => {
-  setRemixedText(poem.replace(/^\s+|\s+$/gm,'').
+const reverseSentences = (text) => {
+  setRemixedText(text.replace(/^\s+|\s+$/gm,'').
   split(sentenceEndings).
   reverse().
   join("\n").replace(/^\s+|\s+$/gm,''))
 }
 
-const randomiseLines = () => {
-  const makeArray = poem.split("\n");
+const randomiseLines = (text) => {
+  const makeArray = text.split("\n");
   makeArray.sort(() => 0.5 - Math.random()); 
   const mappedString = makeArray.join('\n').replace(/^\s+|\s+$/gm,'');
   setRemixedText(mappedString);
 }
 
-const randomiseSentences = () => {
-  const makeArray = poem.replace(/^\s+|\s+$/gm,'').split(sentenceEndings)
+const randomiseSentences = (text) => {
+  const makeArray = text.replace(/^\s+|\s+$/gm,'').split(sentenceEndings)
   makeArray.sort(() => 0.5 - Math.random()); 
-  const mappedString = makeArray
+  const mappedString = makeArray.join(' ')
   setRemixedText(mappedString);
 }
 
 const redundancyPunctuation = /[,;.!?]/g;
-const poeticRedundancy = () => {
-  const newArray = poem.replace(redundancyPunctuation, "").split("\n");
+const poeticRedundancy = (string) => {
+  const newArray = string.replace(redundancyPunctuation, "").split("\n");
   const removeEmptyLines = newArray.filter(line => line.trim() !== "")
   const n = removeEmptyLines.map(line => line.split(" "))
   const listEndWords = n.map(word => `${word[word.length - 1]} `)
   setRemixedText(listEndWords.join("\n"))
  }
 
-const makePalindrome = () => {
-   const reversedPoem = poem.split(" ").reverse().join(" ")
-  setRemixedText(`${poem}\n\n${reversedPoem}`)
+const makePalindrome = (text) => {
+   const reversedPoem = text.split("\n").
+   map(line => line.split(" ").reverse().join(" ")).
+   reverse().join("\n")
+  setRemixedText(`${text}\n\n${reversedPoem}`)
 }
 
 const clearAll = () => {
@@ -204,6 +209,7 @@ const clearAll = () => {
         verbValues={verbValues}
         nounValues={nounValues}
         adjValues={adjValues}
+        mappedTaggedText={mappedTaggedText}
         />
         </div>
         <div className="column3">
@@ -216,11 +222,21 @@ const clearAll = () => {
         </div>
         <div className="column4">
           <RemixButtons 
+          remixedText={remixedText}
           clearRemix={clearRemix}
           handleCopyClick={handleCopyClick}
           shuffleArray={shuffleArray}
           sortAtoZ={sortAtoZ}
           sortZtoA={sortZtoA}
+          poeticRedundancy={poeticRedundancy}
+          randomiseWords={randomiseWords}
+          reverseWords={reverseWords}
+          removeWords={removeWords}
+          verbValues={verbValues}
+          nounValues={nounValues}
+          adjValues={adjValues}
+          makePalindrome={makePalindrome}
+          mappedTaggedRemixedText={mappedTaggedRemixedText}
           />
         </div>
       </section>
