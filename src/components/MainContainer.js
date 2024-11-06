@@ -129,24 +129,31 @@ const sortZtoA = () => {
 
 const punctuationWord = /[-\.,?!—();:]/g;
 
+
 const reverseAllWords = (text) => {
-  setRemixedText(text.toLowerCase().
-  replace(punctuationWord, "").
-  split(" ").
-  reverse()
-  .join(" "))
-}
+    const reversedWords = text.toLowerCase().
+    replace(punctuationWord, "").
+    split("\n").
+    reverse().
+    map(word => word.split(" ").reverse().join(" ")).
+    join("\n")
+    setRemixedText(reversedWords)
+  }
 
 const reverseLines = (text) => {
   setRemixedText(text.split("\n").reverse().join("\n"))
 }
+
+// const reversedPoem = text.split("\n").
+// map(line => line.split(" ").reverse().join(" ")).
+// reverse().join("\n")
 
 const sentenceEndings = /[.?!]/g;
 const reverseSentences = (text) => {
   setRemixedText(text.replace(/^\s+|\s+$/gm,'').
   split(sentenceEndings).
   reverse().
-  join("\n").replace(/^\s+|\s+$/gm,''))
+  join("\n"))
 }
 
 const randomiseLines = (text) => {
