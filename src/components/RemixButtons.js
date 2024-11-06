@@ -1,10 +1,23 @@
 function RemixButtons({handleCopyClick, clearRemix, shuffleArray, sortAtoZ, 
   sortZtoA, remixedText, poeticRedundancy, randomiseWords,
   reverseWords, removeWords, verbValues, nounValues, adjValues, makePalindrome, 
-  mappedTaggedRemixedText}) {
+  mappedTaggedRemixedText, showRemixButtons, setShowRemixButtons, handleClick}) {
  
+    const showHide = !showRemixButtons ? `Show Buttons ↑` : `Hide Buttons ↓`;
+
   return (
-    <div className="remix-buttons">     
+    <div className="remix-buttons">   
+    <p className="hide-show-btn" 
+                onClick={() => handleClick(showRemixButtons, setShowRemixButtons)}>
+                {showHide}</p> 
+    {showRemixButtons && (     
+      <>      
+    <button
+          disabled={remixedText ? false : true}
+          id="copy-btn"
+          onClick={() => {handleCopyClick()}}>
+          Copy Text
+      </button> 
         <button
           disabled={remixedText ? false : true}
           id="randomise-btn"
@@ -37,12 +50,6 @@ function RemixButtons({handleCopyClick, clearRemix, shuffleArray, sortAtoZ,
           Sort Z-A
       </button>   
       </div>
-      <button
-          disabled={remixedText ? false : true}
-          id="copy-btn"
-          onClick={() => {handleCopyClick()}}>
-          Copy Text
-      </button>
       <div className="word-types">
                 <div className="verbs">
                 <button 
@@ -114,6 +121,8 @@ function RemixButtons({handleCopyClick, clearRemix, shuffleArray, sortAtoZ,
           onClick={() => {clearRemix()}}>
           Clear Remix
       </button>
+      </>
+      )} 
     </div>
   );
 }

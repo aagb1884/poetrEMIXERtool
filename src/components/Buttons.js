@@ -1,9 +1,10 @@
 function ButtonsColumn({ poem, clearAll, letterArray, setLetterArray, wordArray, 
     setWordArray, reverseAllWords, reverseLines, punctuationWord, reverseSentences,
     poeticRedundancy, makePalindrome, randomiseLines, randomiseSentences, randomiseWords, 
-    reverseWords, removeWords, verbValues, nounValues, adjValues, mappedTaggedText}) {
+    reverseWords, removeWords, verbValues, nounValues, adjValues, mappedTaggedText,
+    handleClick, showButtons, setShowButtons}) {
     
-    const punctuationLetter = /[-\.,?!—();:' ’]/g;
+    const punctuationLetter = /[-.,?!—();:' ’]/g;
 
     const getWordArray = (words) => {
         const wordArray = words.toLowerCase().
@@ -21,60 +22,34 @@ function ButtonsColumn({ poem, clearAll, letterArray, setLetterArray, wordArray,
         setLetterArray(letterArray); 
     };
     
-    const noWordsOrLetters = wordArray.length === 0 && letterArray.length === 0
     const noWordsButLetters = wordArray.length === 0 && letterArray.length >= 1
     const noLettersButWords = letterArray.length === 0 && wordArray.length >= 1
+
+    const showHide = showButtons ? `Show Buttons ↑` : `Hide Buttons ↓`;
+
     return (          
             <div className="remix-buttons-column">
+                <p className="hide-show-btn" 
+                onClick={() => handleClick(showButtons, setShowButtons)}>
+                {showHide}</p>
+                {!showButtons && (
+                    <>
+                
                 <div className="split-btns">
-                {noWordsOrLetters && (
-                    <>
                 <button
+                    disabled={noWordsButLetters ? true : false}
                     id="word-array-btn"
                     onClick={() => getWordArray(poem)}
                 >
                     Split into words
                 </button>
                 <button
+                    disabled={noLettersButWords ? true : false}
                     id="letter-array-btn"
                     onClick={() => getLetterArray(poem)}
                 >
                     Split into letters
                 </button>
-                </>
-                )}
-                {noWordsButLetters && (
-                    <>
-                <button
-                    id="word-array-btn"
-                    disabled
-                >
-                    Split into words
-                </button>
-                <button
-                    id="letter-array-btn"
-                    onClick={() => getLetterArray(poem)}
-                >
-                    Split into letters
-                </button>
-                </>
-                )}
-                {noLettersButWords && (
-                    <>
-                <button
-                    id="word-array-btn"
-                    onClick={() => getWordArray(poem)}
-                >
-                    Split into words
-                </button>
-                <button
-                    id="letter-array-btn"
-                    disabled
-                >
-                    Split into letters
-                </button>
-                </>
-                )}
                 </div>
                 
                 <div className="reverse-btns">
@@ -182,6 +157,8 @@ function ButtonsColumn({ poem, clearAll, letterArray, setLetterArray, wordArray,
                     onClick={() => {clearAll()}}>
                     Clear All
                 </button>
+                </>
+                )}
             </div>
     );
 }

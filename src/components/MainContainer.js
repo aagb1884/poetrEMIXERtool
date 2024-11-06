@@ -8,6 +8,12 @@ const [poem, setPoem] = useState('');
 const [wordArray, setWordArray] = useState([]);
 const [letterArray, setLetterArray] = useState([]);
 const [remixedText, setRemixedText] = useState('');
+const [showButtons, setShowButtons] = useState(true);
+const [showRemixButtons, setShowRemixButtons] = useState(true);
+
+const handleClick = (state, setState) => {
+    setState(!state)
+}
 
 const posTagger = require('wink-pos-tagger');
 const tagger = posTagger();
@@ -210,6 +216,9 @@ const clearAll = () => {
         nounValues={nounValues}
         adjValues={adjValues}
         mappedTaggedText={mappedTaggedText}
+        handleClick={handleClick}
+        showButtons={showButtons}
+        setShowButtons={setShowButtons}
         />
         </div>
         <div className="column3">
@@ -237,6 +246,9 @@ const clearAll = () => {
           adjValues={adjValues}
           makePalindrome={makePalindrome}
           mappedTaggedRemixedText={mappedTaggedRemixedText}
+          handleClick={handleClick}
+          showRemixButtons={showRemixButtons}
+          setShowRemixButtons={setShowRemixButtons}
           />
         </div>
       </section>
