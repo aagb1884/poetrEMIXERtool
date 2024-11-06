@@ -25,14 +25,14 @@ function ButtonsColumn({ poem, clearAll, letterArray, setLetterArray, wordArray,
     const noWordsButLetters = wordArray.length === 0 && letterArray.length >= 1
     const noLettersButWords = letterArray.length === 0 && wordArray.length >= 1
 
-    const showHide = showButtons ? `Show Buttons ↑` : `Hide Buttons ↓`;
+    const showHide = showButtons ? `Hide Buttons ↓` : `Show Buttons ↑`;
 
     return (          
             <div className="remix-buttons-column">
                 <p className="hide-show-btn" 
                 onClick={() => handleClick(showButtons, setShowButtons)}>
                 {showHide}</p>
-                {!showButtons && (
+                {showButtons && (
                     <>
                 
                 <div className="split-btns">
